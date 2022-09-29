@@ -1,0 +1,9 @@
+# Carpeta .idea generada por IntelliJ
+.idea/
+
+# Archivos iml generados por IntelliJ
+VerbsPractice-grailsPlugins.iml
+VerbsPractice.iml
+
+# Carpeta target
+target/
