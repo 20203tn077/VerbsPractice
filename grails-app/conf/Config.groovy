@@ -115,3 +115,8 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+// resources configuration
+grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/app/*']
+grails.resources.adhoc.includes = ['/images/**', '/css/**', '/js/**', '/app/**']
+grails.resources.adhoc.excludes = ['/plugins/**']

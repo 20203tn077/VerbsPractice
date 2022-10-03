@@ -1,8 +1,6 @@
 package verbspractice
 
 import grails.transaction.Transactional
-import org.springframework.http.HttpStatus
-import org.springframework.validation.Errors
 
 @Transactional(readOnly = true)
 class WeekService {
@@ -19,6 +17,12 @@ class WeekService {
 
     @Transactional
     def create(Week week) {
+        week.validate()
+        println '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n'
+        week.errors.allErrors.each {
+            println it
+        }
+        println '\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n'
         if (!week.validate()) return [success: false, error: Error.FAILED_VALIDATION]
         def createdWeek = week.save()
         if (!createdWeek) return [success: false, error: Error.INTERNAL_ERROR]
@@ -31,7 +35,7 @@ class WeekService {
         if (!week.validate()) return [success: false, error: Error.FAILED_VALIDATION]
         def updatedWeek = week.save()
         if (!updatedWeek) return [success: false, error: Error.INTERNAL_ERROR]
-        return [success: true, created: updated]
+        return [success: true, created: updatedWeek]
     }
 
     @Transactional

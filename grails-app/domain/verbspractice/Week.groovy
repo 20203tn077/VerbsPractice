@@ -1,7 +1,6 @@
 package verbspractice
 
-import java.time.LocalDate
-import java.time.LocalDateTime
+import org.joda.time.LocalDate
 
 class Week {
     Integer number

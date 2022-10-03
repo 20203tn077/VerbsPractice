@@ -2,15 +2,13 @@ package verbspractice
 
 import grails.converters.JSON
 
-import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
-
 class WeekController {
     def weekService
+    def parseService
     def final ERROR_RESPONSE = [success: false, error: Error.INTERNAL_ERROR]
 
     def findAll() {
-        def response
+        def response = null
 
         try {
             response = weekService.findAll() ?: ERROR_RESPONSE
@@ -23,11 +21,11 @@ class WeekController {
     }
 
     def findById() {
-        def response
+        def response = null
 
         try {
-            long id = request.JSON.id as long
-            response = weekService.findById(id: id) ?: ERROR_RESPONSE
+            def id = request.JSON.id as long
+            response = weekService.findById(id) ?: ERROR_RESPONSE
         } catch (Exception e) {
             response = ERROR_RESPONSE
             e.printStackTrace()
@@ -37,10 +35,18 @@ class WeekController {
     }
 
     def create() {
-        def response
+        def response = null
 
         try {
-            response = weekService.findAll() ?: ERROR_RESPONSE
+            println request.JSON
+
+
+
+
+            def week = parseService.parseWeek(request.JSON.week)
+
+            println week
+            response = weekService.create(week) ?: ERROR_RESPONSE
         } catch (Exception e) {
             response = ERROR_RESPONSE
             e.printStackTrace()
@@ -50,10 +56,11 @@ class WeekController {
     }
 
     def update() {
-        def response
+        def response = null
 
         try {
-            response = weekService.findAll() ?: ERROR_RESPONSE
+            def week = request.JSON.week as Week
+            response = weekService.update(week) ?: ERROR_RESPONSE
         } catch (Exception e) {
             response = ERROR_RESPONSE
             e.printStackTrace()
@@ -63,9 +70,10 @@ class WeekController {
     }
 
     def delete() {
-        def response
+        def response = null
 
         try {
+            def id = request.JSON.id as long
             response = weekService.findAll() ?: ERROR_RESPONSE
         } catch (Exception e) {
             response = ERROR_RESPONSE
